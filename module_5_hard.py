@@ -1,6 +1,7 @@
-import time
-
+import time # Импортируем библиотеку time.
+    # Создаем класс User.
 class User:
+    # Создаем методы класса User.
     def __init__(self, nickname, password, age):
         self.nickname = nickname
         self.password = password
@@ -14,7 +15,7 @@ class User:
 
     def __eq__(self, other):
         return self.nickname == other.nickname
-
+    # Создаем класс Video.
 class Video:
     def __init__(self, title, duration, time_now = 0, adult_mode = False):
         self.title = title
@@ -25,37 +26,37 @@ class Video:
     def __str__(self):
         return f'{self.title}'
 
-
+    # Создаем класс UrTube.
 class UrTube:
     def __init__(self):
         self.users = []
         self.videos = []
         self.current_user = None 
 
-    def log_in(self, nickname, password):
+    def log_in(self, nickname, password): # Если пользователь существует, то текущий пользователь меняется на найденного.
         for user in self.users:
-            if user.nickname == nickname and user.password == User(nickname, password, 0).password:
+            if user.nickname == nickname and user.password == User(password):
                 self.current_user = user 
-                return 
+                return None
     
-    def register(self, nickname, password, age):
+    def register(self, nickname, password, age): 
         if any(user.nickname == nickname for user in self.users): # Проверяем есть ли пользователь в списке. 
             print(f'Пользователь {nickname} уже существует.')
-            return
+            return None
         new_user = User(nickname, password, age)
         self.users.append(new_user)
         self.current_user = new_user
 
-    def log_out(self):
+    def log_out(self): # Сброс текущего пользователя.
         self.current_user = None
 
-    def add(self, *videos):
+    def add(self, *videos): # Добавление нового видео.
         for video in videos:
             if video not in self.videos:
                 self.videos.append(video)
             continue
 
-    def get_videos(self, word):
+    def get_videos(self, word): # Поиск видео с учетом регистра.
         word = word.lower()
         search_list = []
         for video in self.videos:
@@ -63,17 +64,16 @@ class UrTube:
                 search_list.append(video.title)
         return search_list
 
-    def watch_video(self, title):
+    def watch_video(self, title): # Поиск и запуск нового видео.
         if self.current_user is None:
-            print('Войдите в аккаунт, чтобы смотреть видео')
-            return
+            print('Войдите в аккаунт, чтобы смотреть видео.')
+            return None
         elif title in self.videos is None:
-            return
+            return None
         elif self.current_user and self.current_user.age < 18:
             print('Вам нет 18 лет, пожалуйста покиньте страницу')
-            return
+            return None
         elif self.current_user:
-
             for video in self.videos:
                 if title in video.title:
                     for i in range(1, 11):
@@ -81,9 +81,7 @@ class UrTube:
                         time.sleep(1)
                     print('Конец видео') 
 
-    def __str__(self):
-        return f'{self.videos}'
-
+ 
 if __name__ == '__main__':
     ur = UrTube()
     v1 = Video('Лучший язык программирования 2024 года', 200)
