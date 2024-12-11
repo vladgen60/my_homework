@@ -1,15 +1,14 @@
-# Домашнее задание по теме "Генераторы"
 
-# Напишите функцию-генератор all_variants(text).
-def all_variants(text):
+def all_variants(text): # Создаем  функцию-генератор all_variants(text)
+    for i in range(len(text)): # Перебираем область равную длине строки.
+        yield text[i]   # Возвращаем все символы строки по одному.
+    yield text[0] + text[1] # Возвращаем первый и второй символы строки.
+    yield text[1] + text[2] # Возвращаем второй и третий символы строки.
+    yield text  # Возвращаем всю строку.
 
-    # Опишите логику работы внутри функции all_variants.
-    for x in range(len(text)):
-        for r in range(len(text) - x):
-            yield text[x:r + x + 1]
 
- # Вызовите функцию all_variants и выполните итерации.
- 
-a = all_variants("abc")
+# П Р И М Е Р Ы
+
+a = all_variants('abc')
 for i in a:
     print(i)
